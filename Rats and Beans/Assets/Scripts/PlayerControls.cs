@@ -9,6 +9,7 @@ public class PlayerControls : MonoBehaviour {
     [SerializeField] private float movementSpeed = 0.25f;
     [SerializeField] private float rotationSpeed = 1f;
     [SerializeField] private float slidyness = 15f;
+
     private Vector2 roughPosition;
 
     // Get required classes
@@ -19,14 +20,20 @@ public class PlayerControls : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        Actions();
         UpdatePosition();
         UpdateDirection();
     }
 
+    private void FixedUpdate() {
+        Actions();
+    }
+
     void Actions () {
+        
+
         if (Input.GetMouseButton(0) && player.CheckCooldown()) {
             player.Attack();
+
         }
     }
 
