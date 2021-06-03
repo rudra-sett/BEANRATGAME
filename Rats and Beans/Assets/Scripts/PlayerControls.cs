@@ -9,6 +9,7 @@ public class PlayerControls : MonoBehaviour {
     [SerializeField] private float movementSpeed = 0.25f;
     [SerializeField] private float rotationSpeed = 1f;
     [SerializeField] private float slidyness = 15f;
+    [SerializeField] private bool movementMode;
 
     private Vector2 roughPosition;
 
@@ -20,7 +21,8 @@ public class PlayerControls : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        UpdatePosition();
+        if (movementMode) { UpdatePosition(); }
+        else { UpdatePositionRelative(); }
         UpdateDirection();
     }
 
@@ -43,7 +45,23 @@ public class PlayerControls : MonoBehaviour {
         float x = (Input.GetKey(KeyCode.D) ? 1 : 0) - (Input.GetKey(KeyCode.A) ? 1 : 0);
         float y = (Input.GetKey(KeyCode.W) ? 1 : 0) - (Input.GetKey(KeyCode.S) ? 1 : 0);
 
-        Vector2 updatedPosition = new Vector2(x, y );
+
+        Vector2 updatedPosition = new Vector2(x , y );
+        updatedPosition = Vector2.ClampMagnitude(updatedPosition, step);
+
+        roughPosition = roughPosition + updatedPosition;
+
+        transform.position = Vector3.Lerp(transform.position, roughPosition, 1 / slidyness);
+    }
+
+    void UpdatePositionRelative() {
+        float step = movementSpeed * Time.deltaTime;
+
+        float x = (Input.GetKey(KeyCode.D) ? 1 : 0) - (Input.GetKey(KeyCode.A) ? 1 : 0);
+        float y = (Input.GetKey(KeyCode.W) ? 1 : 0) - (Input.GetKey(KeyCode.S) ? 1 : 0);
+
+
+        Vector2 updatedPosition = transform.up * y + transform.right * x;
         updatedPosition = Vector2.ClampMagnitude(updatedPosition, step);
 
         roughPosition = roughPosition + updatedPosition;
