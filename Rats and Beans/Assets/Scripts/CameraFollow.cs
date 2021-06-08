@@ -9,17 +9,20 @@ public class CameraFollow : MonoBehaviour
     [SerializeField]
     GameObject player;
 
-    Vector3 offset;
+    float offsetx;
+    float offsety;
 
     void Start()
     {
-        offset = gameObject.transform.position - player.transform.position;
+        offsetx = gameObject.transform.position.x - player.transform.position.x;
+        offsety = gameObject.transform.position.y - player.transform.position.y;
     }
 
     // Update is called once per frame
     void Update()
     {
-        gameObject.transform.position = player.transform.position + offset;
-        
+        gameObject.transform.position = new Vector3(player.transform.position.x + offsetx, player.transform.position.y + offsety,-10);
+
+
     }
 }
