@@ -14,6 +14,6 @@ public class Rat : Enemy {
     protected override void Move () {
         base.Move();
 
-        transform.parent.position += transform.up * Time.deltaTime * 10;
+        //transform.parent.position += transform.up * Time.deltaTime * 10;
     }
 }

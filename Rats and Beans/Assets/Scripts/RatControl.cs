@@ -15,6 +15,9 @@ public class RatControl : MonoBehaviour
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
         agent = gameObject.GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+
     }
 
     // Update is called once per frame
