@@ -15,6 +15,8 @@ public class Player : MonoBehaviour {
     [SerializeField] private float damage = 1;
     [SerializeField] private float attackCooldown;
 
+    [SerializeField] public Animator swordanim;
+
     private bool istouchingrat = false;
     private Collision2D hit;
 
@@ -32,6 +34,14 @@ public class Player : MonoBehaviour {
     public void Attack() {
         //if (tempcollider1.OverlapCollider(new ContactFilter2D(), enemyColliders)) {
 
+        /*foreach (AnimationState state in swordanim)
+        {
+            state.speed = 0.5F;
+        }*/
+
+        swordanim.Play("Base Layer.swordanimation",0);
+  
+        swordanim.Play("Base Layer.New State", 0);
         if (hitfield.IsTouching(tempcollider2)) {
             enemy.GetHit(damage);
         }
