@@ -17,7 +17,7 @@ public class Player : MonoBehaviour {
 
     [SerializeField] public Animator swordanim;
 
-    private Collider2D hit;
+    public Collider2D hit;
 
     void Update() {
         attackCooldown = Mathf.Max(0, attackCooldown - 1 * Time.deltaTime);
@@ -42,7 +42,7 @@ public class Player : MonoBehaviour {
   
         //swordanim.Play("Base Layer.swordidle", 0);
         if (hitfield.IsTouching(hit)) {
-            enemy.GetHit(damage);
+            hit.GetComponentInParent<Enemy>().GetHit(damage);
         }
         attackCooldown = cooldownAmount;
        /* if (istouchingrat)
