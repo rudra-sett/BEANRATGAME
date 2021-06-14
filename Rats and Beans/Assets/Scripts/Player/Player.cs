@@ -7,7 +7,6 @@ public class Player : MonoBehaviour {
     [SerializeField] private SpriteRenderer SRHitfield;
 
     [SerializeField] private Collider2D hitfield;
-    [SerializeField] private Collider2D tempcollider2;
     [SerializeField] private Enemy enemy;
 
     [SerializeField] private float health = 10;
@@ -17,7 +16,8 @@ public class Player : MonoBehaviour {
 
     [SerializeField] public Animator swordanim;
 
-    public Collider2D hit;
+    //public Collider2D hit;
+    public List<Collider2D> currentHits = new List<Collider2D>();
 
     void Update() {
         attackCooldown = Mathf.Max(0, attackCooldown - 1 * Time.deltaTime);
@@ -31,31 +31,17 @@ public class Player : MonoBehaviour {
     }
 
     public void Attack() {
-        //if (tempcollider1.OverlapCollider(new ContactFilter2D(), enemyColliders)) {
-
-        /*foreach (AnimationState state in swordanim)
-        {
-            state.speed = 0.5F;
-        }*/
-
         swordanim.Play("Base Layer.swordanimation",0);
-  
+
+        foreach (var hit in currentHits) {
+            hit.GetComponentInParent<Enemy>().GetHit(damage, this);
+        }
+
+        /*
         //swordanim.Play("Base Layer.swordidle", 0);
         if (hitfield.IsTouching(hit)) {
             hit.GetComponentInParent<Enemy>().GetHit(damage);
-        }
-        attackCooldown = cooldownAmount;
-       /* if (istouchingrat)
-        {
-            hit.gameObject.GetComponentInParent<Rat>().GetHit(damage);
         }*/
+        attackCooldown = cooldownAmount;
     }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log("hit!");
-        hit = other;
-    
-    }
-
 }
